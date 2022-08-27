@@ -6,7 +6,7 @@
 title: Itai Cohen-Solal
 #email: me@etcs.me
 description: >- # this means to ignore newlines until "baseurl:"
-  My official Blog! Your invited to subscribe at etcs.me for live updated.
+  My official Blog! Your invited to subscribe at etcs.me for live email updates.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: etaycs
