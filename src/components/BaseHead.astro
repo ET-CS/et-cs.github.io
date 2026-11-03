@@ -10,7 +10,7 @@ import { SITE_TITLE } from '../consts';
 interface Props {
 	title: string;
 	description: string;
-	image?: ImageMetadata;
+	image?: ImageMetadata | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -29,7 +29,9 @@ const { title, description, image } = Astro.props;
 	try {
 		const t = localStorage.getItem('theme');
 		if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-	} catch {}
+	} catch {
+		// Storage can be unavailable (e.g. private browsing); fall back to the system theme.
+	}
 </script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />

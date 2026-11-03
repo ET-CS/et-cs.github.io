@@ -1,0 +1,24 @@
+name: Bug report
+description: Something on the site is broken, looks wrong, or is hard to use.
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page
+      description: The address of the page where it happens.
+      placeholder: https://et-cs.github.io/...
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead. Screenshots help.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: e.g. Safari 19 on iPhone, Firefox 140 on Windows
