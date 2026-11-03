@@ -10,6 +10,7 @@ Personal site and blog of **Itai Cohen-Solal**, built with Astro 7 and deployed 
 - Handles: GitHub `ET-CS`, X `etaycs`. Personal site: https://etcs.me.
 - Licenses: code is MIT (`LICENSE`); content is CC0 (`LICENSE-CONTENT`).
 - Don't write or publish posts or personal content unless the owner asks for it.
+- Never publish an email address or any other personal contact detail (in code, docs, metadata or commits) unless the owner explicitly authorizes it. Route reports through GitHub instead: private vulnerability reporting for security, "Report content" for conduct.
 
 ## Commands
 
