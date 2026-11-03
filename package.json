@@ -23,13 +23,13 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "astro check",
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix",
+		"lint": "astro sync && eslint .",
+		"lint:fix": "astro sync && eslint . --fix",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"test": "playwright test",
 		"validate": "npm run format:check && npm run lint && npm run check && npm run build && npm test",
-		"prepare": "husky"
+		"prepare": "husky && astro sync"
 	},
 	"lint-staged": {
 		"*.{js,mjs,cjs,ts,astro}": [
