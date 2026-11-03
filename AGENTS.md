@@ -26,12 +26,12 @@ npm run lint:fix       # fix lint issues
 
 ## Workflow
 
-1. Branch from `master`; never push to `master` directly.
+1. Branch from `main`; never push to `main` directly.
 2. Keep each pull request focused on a single change.
 3. `npm run validate` must pass before pushing. Never skip, disable or weaken a test, lint rule or type check to make it pass; fix the cause.
 4. For visual changes, check light and dark mode on desktop and mobile, and attach screenshots to the pull request.
 5. Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages and pull request titles.
-6. Squash-merge once CI is green. Merging to `master` deploys the site.
+6. Squash-merge once CI is green. Merging to `main` deploys the site.
 
 ## Code standards
 

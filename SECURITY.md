@@ -4,7 +4,7 @@
 
 This repository builds a static website hosted on GitHub Pages. There is no server, database, login or user data. Relevant issues include, for example, cross-site scripting through site content, a compromised dependency or build step, or a weakness in the CI/CD workflow.
 
-Only the latest version (the `master` branch and the live site) is supported.
+Only the latest version (the `main` branch and the live site) is supported.
 
 ## Reporting a vulnerability
 
