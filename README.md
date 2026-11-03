@@ -5,7 +5,7 @@
 [![Content: CC0](https://img.shields.io/badge/content-CC0-lightgrey.svg)](LICENSE-CONTENT)
 [![Built with Astro](https://img.shields.io/badge/built%20with-Astro-ff5d01.svg)](https://astro.build)
 
-The personal site and blog of Itai Cohen-Solal: **[et-cs.github.io](https://et-cs.github.io)**.
+The personal site and blog of Itai Sidney Cohen-Solal: **[et-cs.github.io](https://et-cs.github.io)**.
 
 A static site built with [Astro](https://astro.build): one column of well-set text, a light and dark theme, no client-side framework, and almost no JavaScript.
 

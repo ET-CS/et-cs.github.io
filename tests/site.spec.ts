@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { SITE_TITLE } from '../src/consts';
 
 const PAGES = [
 	{ path: '/', heading: "Hi, I'm Itai." },
@@ -26,7 +27,7 @@ for (const { path, heading } of PAGES) {
 			const response = await page.goto(path);
 
 			expect(response?.status()).toBe(200);
-			await expect(page).toHaveTitle(/Itai Cohen-Solal/);
+			await expect(page).toHaveTitle(new RegExp(SITE_TITLE));
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
 			await expect(page.getByRole('banner')).toBeVisible();
 			await expect(page.getByRole('contentinfo')).toBeVisible();
