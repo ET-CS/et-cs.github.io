@@ -32,4 +32,4 @@ One-time setup: in the repo go to **Settings → Pages → Build and deployment 
 
 ## License
 
-Content: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Code: MIT. See [LICENSE.md](LICENSE.md).
+Content: public domain ([CC0](https://creativecommons.org/publicdomain/zero/1.0/)). Code: MIT. See [LICENSE.md](LICENSE.md).

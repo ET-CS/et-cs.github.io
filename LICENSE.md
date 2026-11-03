@@ -3,11 +3,12 @@
 ## Content
 
 The writing and other original content on this site (including everything in
-`src/content/`) is © Itai Cohen-Solal and licensed under
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+`src/content/`) by Itai Cohen-Solal is dedicated to the public domain under
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
 
-You may share and adapt it for any purpose, including commercially, as long as
-you give appropriate credit and link back to the original.
+You can copy, modify, distribute and use it for any purpose, including
+commercially, without asking permission or giving credit. Credit is appreciated
+but not required.
 
 ## Code
 
@@ -39,4 +40,4 @@ SOFTWARE.
 ```
 
 `src/styles/global.css` is based on [Bear Blog](https://github.com/HermanMartinus/bearblog)'s
-default CSS (MIT). The Atkinson Hyperlegible font is licensed under the SIL Open Font License.
+default CSS (MIT). The Newsreader font is licensed under the SIL Open Font License.

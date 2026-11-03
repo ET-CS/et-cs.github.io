@@ -1,11 +1,12 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import Base from '../layouts/Base.astro';
 ---
 
-<Layout title="About" description="About Itai Cohen-Solal." pubDate={new Date('2026-11-03')}>
+<Base title="About" description="About Itai Cohen-Solal.">
+	<h1>About</h1>
 	<p>Hi, I'm Itai Sidney Cohen-Solal. Most people just call me Itai.</p>
 	<p>
 		More about me at <a href="https://etcs.me">etcs.me</a>. Code lives on{' '}
 		<a href="https://github.com/ET-CS">GitHub</a>.
 	</p>
-</Layout>
+</Base>
