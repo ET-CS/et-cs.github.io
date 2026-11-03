@@ -89,7 +89,7 @@ A pre-commit hook formats and lints staged files. Dependabot keeps dependencies 
 
 ## Deployment
 
-Pushing to `master` runs CI; if it passes, the built site is deployed to GitHub Pages.
+Pushing to `main` runs CI; if it passes, the built site is deployed to GitHub Pages.
 
 ## Issues
 
