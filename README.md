@@ -1,25 +1,31 @@
-ET-CS.github.io
-===============
+# et-cs.github.io
 
-My github.io page
+Personal site and blog of Itai Cohen-Solal, built with [Astro](https://astro.build) and deployed to GitHub Pages.
 
-Usage:
+## Develop
 
-    bundle install
-	bundle exec jekyll serve
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # output in dist/
+npm run preview  # serve the built site
+```
 
-To preview navigate to http://localhost:4000.
+## Writing posts
 
-### Updating the GitHub Pages gem
+Add a Markdown (`.md`) or MDX (`.mdx`) file to `src/content/blog/`:
 
-Jekyll is an active open source project that is updated frequently. 
-If the `github-pages` gem on your computer is out of date with 
-the `github-pages` gem on the GitHub Pages server, 
-your site may look different when built locally than when 
-published on GitHub. To avoid this, 
-regularly update the `github-pages` gem on your computer.
+```markdown
+---
+title: 'My post'
+description: 'One-line summary'
+pubDate: '2026-11-03'
+---
 
-1. Open Git Bash.
-2. Update the `github-pages` gem.
-   * If you installed Bundler, run `bundle update github-pages`.
-   * If you don't have Bundler installed, run `gem update github-pages`.
+Post content here.
+```
+
+## Deploy
+
+Every push to `master` builds and deploys the site via `.github/workflows/deploy.yml`.
+One-time setup: in the repo go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
