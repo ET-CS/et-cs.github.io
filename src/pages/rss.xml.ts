@@ -1,22 +1,20 @@
 import rss from '@astrojs/rss';
-import type { APIContext } from 'astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getPosts } from '../lib/posts';
+import type { APIRoute } from 'astro';
+import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_TITLE, SITE_URL } from '../consts';
+import { getPosts, postUrl } from '../lib/posts';
 
-export async function GET(context: APIContext) {
-	if (!context.site)
-		throw new Error('`site` must be set in astro.config.mjs to build the RSS feed.');
-
+export const GET: APIRoute = async () => {
 	const posts = await getPosts();
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
-		site: context.site,
+		site: SITE_URL,
+		customData: `<language>${SITE_LANGUAGE}</language>`,
 		items: posts.map((post) => ({
 			title: post.data.title,
 			description: post.data.description,
 			pubDate: post.data.pubDate,
-			link: `/blog/${post.id}/`,
+			link: postUrl(post),
 		})),
 	});
-}
+};

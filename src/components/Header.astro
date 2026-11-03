@@ -4,8 +4,15 @@ import { SITE_TITLE } from '../consts';
 const links = [
 	{ href: '/blog/', label: 'Writing' },
 	{ href: '/about/', label: 'About' },
-];
+] as const;
+
 const path = Astro.url.pathname;
+
+/** `page` for the link to the current page, `true` for the section the page is in. */
+function currentState(href: string): 'page' | 'true' | undefined {
+	if (path === href) return 'page';
+	return path.startsWith(href) ? 'true' : undefined;
+}
 ---
 
 <header class="wrap">
@@ -14,11 +21,11 @@ const path = Astro.url.pathname;
 	</a>
 	<nav aria-label="Main">
 		{links.map(({ href, label }) => (
-			<a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+			<a href={href} aria-current={currentState(href)}>
 				{label}
 			</a>
 		))}
-		<button id="theme-toggle" type="button" aria-label="Switch light or dark theme">
+		<button id="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false">
 			<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
 				<circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
 				<path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"></path>
@@ -28,18 +35,36 @@ const path = Astro.url.pathname;
 </header>
 
 <script>
-	document.getElementById('theme-toggle')?.addEventListener('click', () => {
-		const root = document.documentElement;
-		const current =
-			root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-		const next = current === 'dark' ? 'light' : 'dark';
+	import { THEME_STORAGE_KEY } from '../consts';
+
+	type Theme = 'light' | 'dark';
+
+	const root = document.documentElement;
+	const toggle = document.getElementById('theme-toggle');
+	const systemDark = matchMedia('(prefers-color-scheme: dark)');
+
+	function currentTheme(): Theme {
+		const { theme } = root.dataset;
+		if (theme === 'light' || theme === 'dark') return theme;
+		return systemDark.matches ? 'dark' : 'light';
+	}
+
+	function syncToggle(): void {
+		toggle?.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+	}
+
+	toggle?.addEventListener('click', () => {
+		const next: Theme = currentTheme() === 'dark' ? 'light' : 'dark';
 		root.dataset.theme = next;
+		syncToggle();
 		try {
-			localStorage.setItem('theme', next);
+			localStorage.setItem(THEME_STORAGE_KEY, next);
 		} catch {
 			// Storage can be unavailable; the choice then lasts for this page view only.
 		}
 	});
+	systemDark.addEventListener('change', syncToggle);
+	syncToggle();
 </script>
 
 <style>
@@ -68,7 +93,7 @@ const path = Astro.url.pathname;
 		color: var(--muted);
 	}
 	nav a:hover,
-	nav a[aria-current='page'] {
+	nav a[aria-current] {
 		color: var(--ink);
 	}
 	button {
@@ -82,5 +107,9 @@ const path = Astro.url.pathname;
 	}
 	button:hover {
 		color: var(--ink);
+	}
+	/* The toggle needs JavaScript; hide it until the head script confirms JS is running. */
+	:global(html:not(.js)) button {
+		display: none;
 	}
 </style>

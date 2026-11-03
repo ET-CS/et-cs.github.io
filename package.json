@@ -23,13 +23,13 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "astro check",
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix",
+		"lint": "astro sync && eslint .",
+		"lint:fix": "astro sync && eslint . --fix",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"test": "playwright test",
 		"validate": "npm run format:check && npm run lint && npm run check && npm run build && npm test",
-		"prepare": "husky"
+		"prepare": "husky && astro sync"
 	},
 	"lint-staged": {
 		"*.{js,mjs,cjs,ts,astro}": [
@@ -51,6 +51,7 @@
 		"@axe-core/playwright": "^4.14.0",
 		"@eslint/js": "^10.0.1",
 		"@playwright/test": "^1.64.1",
+		"@types/node": "^26.6.6",
 		"eslint": "^10.14.0",
 		"eslint-plugin-astro": "^3.2.1",
 		"eslint-plugin-jsx-a11y-x": "^0.2.0",

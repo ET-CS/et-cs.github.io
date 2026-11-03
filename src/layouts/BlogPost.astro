@@ -1,15 +1,25 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
+import type { Post } from '../lib/posts';
 import Base from './Base.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+interface Props {
+	post: Post;
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+const { Content } = await render(post);
 ---
 
-<Base title={title} description={description} image={heroImage}>
+<Base
+	title={title}
+	description={description}
+	image={heroImage?.src}
+	article={{ publishedTime: pubDate, modifiedTime: updatedDate }}
+>
 	<article>
 		<header>
 			<h1>{title}</h1>
@@ -23,10 +33,16 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				)}
 			</p>
 		</header>
-		{heroImage && <Image class="hero" width={1200} height={600} src={heroImage} alt="" />}
-		<div class="prose">
-			<slot />
-		</div>
+		{heroImage && (
+			<Image
+				class="hero"
+				src={heroImage.src}
+				alt={heroImage.alt}
+				widths={[720, 1200]}
+				sizes="(min-width: 640px) 36rem, 100vw"
+			/>
+		)}
+		<Content />
 	</article>
 </Base>
 

@@ -1,29 +1,23 @@
-# build output
+# Build output
 dist/
-# generated types
+dist-test/
 .astro/
 
-# dependencies
+# Dependencies
 node_modules/
 
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
-.DS_Store
-
-# jetbrains setting folder
-.idea/
-
-# test output
+# Test output
 playwright-report/
 test-results/
 blob-report/
+
+# Logs
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+
+# OS and editor files
+.DS_Store
+.idea/
