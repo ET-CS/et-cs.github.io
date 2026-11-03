@@ -22,7 +22,7 @@ npm run format         # format all files
 npm run lint:fix       # fix lint issues
 ```
 
-Tests run against the production build, so run `npm run build` first. To use a preinstalled Chromium instead of Playwright's own, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
+`npm test` builds its own test version of the site (fixture posts from `tests/fixtures/blog/`, output in `dist-test/`) and runs Playwright against it. To use a preinstalled Chromium instead of Playwright's own, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
 
 ## Workflow
 
@@ -38,21 +38,23 @@ Tests run against the production build, so run `npm run build` first. To use a p
 - **TypeScript:** Astro's `strictest` preset. No `any`, non-null assertions or `@ts-ignore`. Type optional props as `prop?: T | undefined`.
 - **Astro first:** components are `.astro` files rendered at build time. Client-side JavaScript is for progressive enhancement only; every page must work without it. Don't introduce a UI framework without a clear need.
 - **Accessibility:** semantic landmarks (`header`, `main`, `footer`, `nav`), one `h1` per page, native `button` and `a` elements, and labels for icon-only controls. Tests enforce WCAG 2.2 AA in both themes.
-- **Structure:** small, focused components. Data access lives in `src/lib/` (e.g. `getPosts()`); shared page chrome lives in `src/layouts/Base.astro`.
+- **Single source of truth:** site-wide values (site URL, title, language, profile links, storage keys) live in `src/consts.ts`; never repeat a literal that's defined there. Build the URL of a post with `postUrl()`.
+- **Structure:** small, focused components. Data access and shared types live in `src/lib/` (e.g. `getPosts()`, `Post`); shared page chrome lives in `src/layouts/Base.astro`, which takes page metadata (`title`, `description`, `image`, `article`, `noindex`).
+- **Imports:** type-only imports use `import type` on their own line (enforced by ESLint).
 - **Dependencies:** prefer the platform and Astro built-ins. Add a dependency only when it clearly earns its place.
 - **Comments** explain _why_, not _what_.
-- **Tests:** new pages and behaviour get Playwright coverage in `tests/`.
+- **Tests:** new pages and behaviour get Playwright coverage in `tests/`. Add a page to `PAGES` in `tests/site.spec.ts` to get render, layout and accessibility checks; tag layout-sensitive tests `@responsive` so they also run on the mobile viewport. Tests run against fixture content, not real posts.
 
 ## Design language
 
 Editorial and monochrome: a single narrow column where typography does the work. New UI must follow it.
 
 - **Typeface:** Newsreader (variable, with optical sizes) from `@fontsource-variable/newsreader`; code uses the system monospace stack.
-- **Color:** use only the tokens in `src/styles/global.css` (`--paper`, `--ink`, `--muted`, `--rule`, `--code-bg`), each defined for light and dark. No hard-coded colors in components and no accent color.
+- **Color:** use only the tokens in `src/styles/global.css` (`--paper`, `--ink`, `--muted`, `--rule`, `--code-bg`), each defined once for both themes with `light-dark()`. No hard-coded colors in components and no accent color.
 - **Layout:** one column, `--measure` (36rem) wide, inside `.wrap`. Generous vertical rhythm; hairline rules (`--rule`) as separators.
 - **Links:** text links with a subtle underline rather than icons.
-- **Theme:** follows the operating system by default. The header toggle overrides it and persists the choice in `localStorage` under `theme`.
+- **Theme:** follows the operating system by default. The header toggle (shown only when JavaScript runs) overrides it via `data-theme` on `<html>` and persists the choice in `localStorage` under `THEME_STORAGE_KEY`.
 
 ## Content
 
-Posts live in `src/content/blog/` as Markdown or MDX and are validated against the schema in `src/content.config.ts`: `title`, `description`, `pubDate`, and optional `updatedDate` and `heroImage`. Dates are calendar dates and are formatted in UTC.
+Posts live in `src/content/blog/` as Markdown or MDX and are validated against the schema in `src/content.config.ts`: `title`, `description`, `pubDate`, and optional `updatedDate` and `heroImage` (`src` relative to the post, plus `alt`). Dates are calendar dates and are formatted in UTC.

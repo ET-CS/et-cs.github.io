@@ -4,15 +4,16 @@ interface Props {
 }
 
 const { date } = Astro.props;
+
+// Frontmatter dates are calendar dates parsed as UTC midnight. Format them in UTC so the day
+// shown never depends on the build machine's time zone.
+const isoDate = date.toISOString().slice(0, 10);
+const label = date.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'short',
+	day: 'numeric',
+	timeZone: 'UTC',
+});
 ---
 
-<time datetime={date.toISOString()}>
-	{date.toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-		// Frontmatter dates are calendar dates parsed as UTC midnight; format them in UTC
-		// so the day shown never depends on the build machine's time zone.
-		timeZone: 'UTC',
-	})}
-</time>
+<time datetime={isoDate}>{label}</time>

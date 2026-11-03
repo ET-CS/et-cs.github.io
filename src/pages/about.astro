@@ -1,4 +1,5 @@
 ---
+import { PROFILES } from '../consts';
 import Base from '../layouts/Base.astro';
 ---
 
@@ -6,7 +7,7 @@ import Base from '../layouts/Base.astro';
 	<h1>About</h1>
 	<p>Hi, I'm Itai Sidney Cohen-Solal. Most people just call me Itai.</p>
 	<p>
-		More about me at <a href="https://etcs.me">etcs.me</a>. Code lives on{' '}
-		<a href="https://github.com/ET-CS">GitHub</a>.
+		More about me at <a href={PROFILES.website.url}>{PROFILES.website.label}</a>. Code lives on{' '}
+		<a href={PROFILES.github.url}>{PROFILES.github.label}</a>.
 	</p>
 </Base>

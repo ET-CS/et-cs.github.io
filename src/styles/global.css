@@ -1,32 +1,22 @@
 /* Global styles: design tokens (light and dark), base typography and prose elements. */
 
 :root {
-	--paper: #fcfbf8;
-	--ink: #1b1b1a;
-	--muted: #6f6d68;
-	--rule: #e4e1da;
-	--code-bg: #f2f0ea;
+	/* Each color is defined once for both themes; `color-scheme` picks the value. */
+	--paper: light-dark(#fcfbf8, #131312);
+	--ink: light-dark(#1b1b1a, #e9e7e2);
+	--muted: light-dark(#6f6d68, #9b988f);
+	--rule: light-dark(#e4e1da, #2d2c29);
+	--code-bg: light-dark(#f2f0ea, #1e1d1b);
 	--measure: 36rem;
 	--serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
 	--mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+	color-scheme: light dark;
+}
+/* An explicit choice from the theme toggle overrides the system setting. */
+:root[data-theme='light'] {
 	color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) {
-		--paper: #131312;
-		--ink: #e9e7e2;
-		--muted: #9b988f;
-		--rule: #2d2c29;
-		--code-bg: #1e1d1b;
-		color-scheme: dark;
-	}
-}
 :root[data-theme='dark'] {
-	--paper: #131312;
-	--ink: #e9e7e2;
-	--muted: #9b988f;
-	--rule: #2d2c29;
-	--code-bg: #1e1d1b;
 	color-scheme: dark;
 }
 
@@ -192,26 +182,6 @@ pre {
 	background: var(--code-bg) !important;
 	line-height: 1.5;
 }
-/* Code highlighting follows the light/dark theme (Shiki dual themes). */
-.astro-code {
-	color: var(--shiki-light) !important;
-}
-.astro-code span {
-	color: var(--shiki-light);
-	font-style: var(--shiki-light-font-style);
-}
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) .astro-code,
-	:root:not([data-theme='light']) .astro-code span {
-		color: var(--shiki-dark) !important;
-		font-style: var(--shiki-dark-font-style);
-	}
-}
-:root[data-theme='dark'] .astro-code,
-:root[data-theme='dark'] .astro-code span {
-	color: var(--shiki-dark) !important;
-	font-style: var(--shiki-dark-font-style);
-}
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -222,15 +192,6 @@ td {
 	padding: 0.4em 0.6em 0.4em 0;
 	border-bottom: 1px solid var(--rule);
 	text-align: left;
-}
-
-.sr-only {
-	position: absolute !important;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	clip-path: inset(50%);
-	white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,33 +1,29 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { PROFILES, SITE_TITLE } from '../consts';
 
-const LICENSE_URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
-
-const links = [
-	{ href: 'https://github.com/ET-CS', label: 'GitHub', rel: 'me noopener' },
-	{ href: 'https://x.com/etaycs', label: 'X', rel: 'me noopener' },
-	{ href: 'https://etcs.me', label: 'etcs.me', rel: 'me noopener' },
-	{ href: '/rss.xml', label: 'RSS', rel: 'alternate' },
-] as const;
+const CONTENT_LICENSE_URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
 ---
 
 <footer class="wrap">
 	<ul>
 		<li>{SITE_TITLE}</li>
 		<li>
-			<a href={LICENSE_URL} rel="license noopener">
+			<a href={CONTENT_LICENSE_URL} rel="license">
 				Public domain (CC0)
 			</a>
 		</li>
 	</ul>
 	<ul aria-label="Elsewhere">
-		{links.map(({ href, label, rel }) => (
+		{Object.values(PROFILES).map(({ url, label }) => (
 			<li>
-				<a href={href} rel={rel}>
+				<a href={url} rel="me">
 					{label}
 				</a>
 			</li>
 		))}
+		<li>
+			<a href="/rss.xml">RSS</a>
+		</li>
 	</ul>
 </footer>
 
@@ -52,7 +48,8 @@ const links = [
 		display: inline;
 		margin: 0;
 	}
-	/* Decorative separator; the empty alt text keeps screen readers from announcing it. */
+	/* Decorative separator. The second declaration's empty alt text keeps screen readers from
+	   announcing it; browsers without that syntax keep the first. */
 	li + li::before {
 		content: '·';
 		content: '·' / '';

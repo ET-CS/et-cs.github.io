@@ -3,22 +3,33 @@ import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_TITLE } from '../consts';
+import type { ArticleMeta } from '../lib/meta';
 
 interface Props {
-	title?: string;
-	description?: string;
+	/** Page title; the site title is appended. Omit on the home page. */
+	title?: string | undefined;
+	description?: string | undefined;
 	image?: ImageMetadata | undefined;
+	article?: ArticleMeta | undefined;
+	/** Keep the page out of search results (e.g. the 404 page). */
+	noindex?: boolean | undefined;
 }
 
-const { title, description = SITE_DESCRIPTION, image } = Astro.props;
+const { title, description = SITE_DESCRIPTION, image, article, noindex = false } = Astro.props;
 const fullTitle = title ? `${title} · ${SITE_TITLE}` : SITE_TITLE;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={SITE_LANGUAGE}>
 	<head>
-		<BaseHead title={fullTitle} description={description} image={image} />
+		<BaseHead
+			title={fullTitle}
+			description={description}
+			image={image}
+			article={article}
+			noindex={noindex}
+		/>
 	</head>
 	<body>
 		<Header />

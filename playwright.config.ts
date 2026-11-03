@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { TEST_BUILD_ENV } from './src/lib/build';
 
 const PORT = 4321;
 const isCI = Boolean(process.env['CI']);
@@ -18,13 +19,16 @@ export default defineConfig({
 	},
 	projects: [
 		{ name: 'desktop', use: { ...devices['Desktop Chrome'] } },
-		{ name: 'mobile', use: { ...devices['Pixel 7'] } },
+		// Only layout-sensitive tests (tagged @responsive) also run on a phone viewport.
+		{ name: 'mobile', use: { ...devices['Pixel 7'] }, grep: /@responsive/ },
 	],
-	// Tests run against the production build: run `npm run build` first.
-	// `--ignore-lock` keeps the server in the foreground so Playwright owns its lifecycle.
+	// Builds a test version of the site (fixture posts, separate output directory) and serves it.
+	// `--ignore-lock` keeps the preview server in the foreground so Playwright owns its lifecycle.
 	webServer: {
-		command: `npm run preview -- --port ${PORT} --ignore-lock`,
+		command: `npm run build && npm run preview -- --port ${PORT} --ignore-lock`,
+		env: { [TEST_BUILD_ENV]: 'true' },
 		port: PORT,
 		reuseExistingServer: !isCI,
+		timeout: 120_000,
 	},
 });

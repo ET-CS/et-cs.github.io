@@ -30,7 +30,7 @@ The site runs at http://localhost:4321.
 | `npm run check`    | Type-check (`astro check`, TypeScript strictest)         |
 | `npm run lint`     | Lint with ESLint (TypeScript, Astro and accessibility)   |
 | `npm run format`   | Format everything with Prettier                          |
-| `npm test`         | Run the Playwright tests against the build               |
+| `npm test`         | Build a test version of the site and run Playwright      |
 | `npm run validate` | Everything CI runs: format, lint, types, build and tests |
 
 The first time you run tests, install the browser: `npx playwright install chromium`.
@@ -49,7 +49,18 @@ pubDate: '2026-11-03'
 The post, in Markdown.
 ```
 
-Optional fields: `updatedDate` and `heroImage` (a path to an image in `src/assets/`). The schema lives in [`src/content.config.ts`](src/content.config.ts), so a typo in the frontmatter fails the build instead of shipping.
+Optional fields:
+
+- `updatedDate`: when the post was last revised.
+- `heroImage`: a cover image, with `src` (a path relative to the post file) and `alt` (a description of the image, or `''` if it's purely decorative):
+
+  ```yaml
+  heroImage:
+    src: './cover.jpg'
+    alt: 'A line drawing of a mountain.'
+  ```
+
+The schema lives in [`src/content.config.ts`](src/content.config.ts), so a typo in the frontmatter fails the build instead of shipping.
 
 ## Project structure
 
@@ -62,6 +73,7 @@ src/
 ├── pages/        Routes: home, writing, about, 404, RSS, robots.txt
 └── styles/       global.css: design tokens and typography
 tests/            Playwright end-to-end and accessibility tests
+tests/fixtures/   Fixture posts used by test builds
 ```
 
 ## Quality
@@ -71,7 +83,7 @@ Every pull request runs [CI](.github/workflows/ci.yml), which must pass before a
 - **Formatting:** Prettier
 - **Linting:** ESLint with `typescript-eslint` (strict) and Astro accessibility rules (`jsx-a11y` strict)
 - **Types:** TypeScript with Astro's `strictest` preset
-- **Tests:** Playwright on desktop and mobile. Every page renders without errors, has no horizontal scrolling and passes [axe](https://github.com/dequelabs/axe-core) WCAG 2.2 AA checks in light and dark mode. Internal links resolve, the theme toggle works, and the 404 page, RSS, sitemap and robots.txt are served.
+- **Tests:** Playwright builds a test version of the site with fixture posts (in [`tests/fixtures/`](tests/fixtures/), never deployed) and checks it on desktop and mobile. Every page, including posts and the 404 page, renders without errors or horizontal scrolling and passes [axe](https://github.com/dequelabs/axe-core) WCAG 2.2 AA checks in light and dark mode, with or without the theme toggle. Tests also cover links, navigation state, post dates and metadata, the page without JavaScript, RSS, sitemap and robots.txt.
 
 A pre-commit hook formats and lints staged files. Dependabot keeps dependencies and GitHub Actions current, and every action is pinned to a commit SHA.
 
