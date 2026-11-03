@@ -1,0 +1,27 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Hi, I'm Itai.</h1>
+			<p>
+				Welcome to my corner of the web. I'll be writing here on the <a href="/blog">blog</a>.
+			</p>
+			<p>
+				You can also find me on <a href="https://github.com/ET-CS">GitHub</a>,
+				<a href="https://x.com/etaycs">X</a>, and at <a href="https://etcs.me">etcs.me</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
