@@ -3,12 +3,11 @@ title: 'Typography test post'
 description: 'Fixture post that exercises every Markdown element the site styles.'
 pubDate: '2026-01-15'
 updatedDate: '2026-02-01'
-heroImage:
-  src: './cover.png'
-  alt: 'A line drawing of a mountain inside a frame.'
 ---
 
 A paragraph with a [link](https://example.com), _emphasis_, **strong text** and `inline code`.
+
+![A line drawing of a mountain inside a frame.](./cover.png)
 
 ## Second-level heading
 

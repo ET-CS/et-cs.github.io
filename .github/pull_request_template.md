@@ -2,8 +2,8 @@
 
 <!-- What does this change, and why? -->
 
-## Checklist
+## Test plan
 
-- [ ] `npm run validate` passes locally
-- [ ] Screenshots attached for visual changes (light and dark, desktop and mobile)
-- [ ] Docs updated if behaviour or conventions changed
+- [ ] `npm run validate` passes
+- [ ] Visual changes checked in light and dark mode, on desktop and mobile (screenshots attached if possible)
+- [ ] Docs (`README.md`, `AGENTS.md`) updated if behavior or conventions changed

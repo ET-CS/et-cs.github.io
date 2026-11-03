@@ -1,10 +1,7 @@
 ---
 import { SITE_TITLE } from '../consts';
 
-const links = [
-	{ href: '/blog/', label: 'Writing' },
-	{ href: '/about/', label: 'About' },
-] as const;
+const links = [{ href: '/blog/', label: 'Writing' }] as const;
 
 const path = Astro.url.pathname;
 

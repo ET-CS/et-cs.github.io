@@ -1,12 +1,11 @@
 // @ts-check
 import js from '@eslint/js';
 import astro from 'eslint-plugin-astro';
-import { defineConfig, globalIgnores } from 'eslint/config';
-import globals from 'globals';
+import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-	globalIgnores(['dist/', 'dist-test/', '.astro/', 'playwright-report/', 'test-results/']),
+	includeIgnoreFile(`${import.meta.dirname}/.gitignore`),
 	js.configs.recommended,
 	tseslint.configs.strict,
 	tseslint.configs.stylistic,
@@ -15,6 +14,15 @@ export default defineConfig([
 	{
 		rules: {
 			'@typescript-eslint/consistent-type-imports': 'error',
+			// `consistent-type-imports` also accepts inline `type` specifiers; the convention is a
+			// separate `import type` statement.
+			'no-restricted-syntax': [
+				'error',
+				{
+					selector: "ImportSpecifier[importKind='type']",
+					message: 'Import types with a separate `import type` statement.',
+				},
+			],
 		},
 	},
 	{
@@ -27,17 +35,7 @@ export default defineConfig([
 			parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
 		},
 		rules: {
-			// `noPropertyAccessFromIndexSignature` (tsconfig) requires `env['NAME']`.
-			'@typescript-eslint/dot-notation': ['error', { allowIndexSignaturePropertyAccess: true }],
 			'@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
 		},
-	},
-	{
-		files: ['src/**/*.{ts,astro}'],
-		languageOptions: { globals: globals.browser },
-	},
-	{
-		files: ['*.{js,ts}', 'src/lib/build.ts', 'tests/**/*.ts'],
-		languageOptions: { globals: globals.node },
 	},
 ]);

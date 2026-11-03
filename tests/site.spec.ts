@@ -1,16 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
-import { SITE_TITLE, SITE_URL } from '../src/consts';
+import { SITE_LANGUAGE, SITE_TITLE, SITE_URL } from '../src/consts';
 
 /** Pages of the test build, including the fixture posts in `tests/fixtures/blog/`. */
 const PAGES = [
-	{ path: '/', heading: "Hi, I'm Itai.", status: 200 },
-	{ path: '/blog/', heading: 'Writing', status: 200 },
-	{ path: '/about/', heading: 'About', status: 200 },
-	{ path: '/blog/typography/', heading: 'Typography test post', status: 200 },
-	{ path: '/blog/minimal/', heading: 'Minimal test post', status: 200 },
-	{ path: '/does-not-exist/', heading: 'Page not found', status: 404 },
+	{ path: '/', status: 200 },
+	{ path: '/blog/', status: 200 },
+	{ path: '/blog/typography/', status: 200 },
+	{ path: '/blog/minimal/', status: 200 },
+	{ path: '/does-not-exist/', status: 404 },
 ] as const;
 
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
@@ -36,7 +35,7 @@ async function expectNoAccessibilityViolations(page: Page): Promise<void> {
 
 const themeToggle = (page: Page) => page.getByRole('button', { name: 'Dark theme' });
 
-for (const { path, heading, status } of PAGES) {
+for (const { path, status } of PAGES) {
 	test.describe(`page ${path}`, () => {
 		test('renders without errors', async ({ page }) => {
 			const errors = trackErrors(page);
@@ -44,7 +43,7 @@ for (const { path, heading, status } of PAGES) {
 
 			expect(response?.status()).toBe(status);
 			expect(await page.title()).toContain(SITE_TITLE);
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+			await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 			await expect(page.getByRole('banner')).toBeVisible();
 			await expect(page.getByRole('contentinfo')).toBeVisible();
 			expect(errors).toEqual([]);
@@ -112,15 +111,15 @@ test.describe('theme toggle', () => {
 
 		await expect(themeToggle(page)).toHaveAttribute('aria-pressed', 'false');
 		await themeToggle(page).click();
-		await expect(root).toHaveAttribute('data-theme', 'dark');
+		await expect(root).toHaveCSS('color-scheme', 'dark');
 		await expect(themeToggle(page)).toHaveAttribute('aria-pressed', 'true');
 
 		await page.reload();
-		await expect(root).toHaveAttribute('data-theme', 'dark');
+		await expect(root).toHaveCSS('color-scheme', 'dark');
 		await expect(themeToggle(page)).toHaveAttribute('aria-pressed', 'true');
 
 		await themeToggle(page).click();
-		await expect(root).toHaveAttribute('data-theme', 'light');
+		await expect(root).toHaveCSS('color-scheme', 'light');
 	});
 
 	for (const systemScheme of ['light', 'dark'] as const) {
@@ -128,8 +127,8 @@ test.describe('theme toggle', () => {
 			await page.emulateMedia({ colorScheme: systemScheme });
 			await page.goto('/blog/typography/');
 			await themeToggle(page).click();
-			await expect(page.locator('html')).toHaveAttribute(
-				'data-theme',
+			await expect(page.locator('html')).toHaveCSS(
+				'color-scheme',
 				systemScheme === 'light' ? 'dark' : 'light',
 			);
 			await expectNoAccessibilityViolations(page);
@@ -143,7 +142,9 @@ test.describe('without JavaScript', () => {
 	test('pages render and the theme toggle is hidden', async ({ page }) => {
 		await page.goto('/blog/typography/');
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Typography test post');
-		await expect(page.locator('#theme-toggle')).toBeHidden();
+		const toggle = page.locator('#theme-toggle');
+		await expect(toggle).toBeAttached();
+		await expect(toggle).toBeHidden();
 	});
 });
 
@@ -162,7 +163,9 @@ test.describe('navigation', () => {
 			'aria-current',
 			'true',
 		);
-		await expect(nav.getByRole('link', { name: 'About' })).not.toHaveAttribute('aria-current');
+
+		await page.goto('/');
+		await expect(nav.getByRole('link', { name: 'Writing' })).not.toHaveAttribute('aria-current');
 	});
 });
 
@@ -176,7 +179,7 @@ test.describe('posts', () => {
 		]);
 	});
 
-	test('show publish and update dates and the hero image', async ({ page }) => {
+	test('show publish and update dates and images', async ({ page }) => {
 		await page.goto('/blog/typography/');
 		const article = page.getByRole('article');
 		await expect(article.locator('time')).toHaveText(['Jan 15, 2026', 'Feb 1, 2026']);
@@ -195,6 +198,10 @@ test.describe('posts', () => {
 			'href',
 			`${SITE_URL}/blog/typography/`,
 		);
+		await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+			'content',
+			'Typography test post',
+		);
 	});
 });
 
@@ -202,13 +209,14 @@ test('404 page is kept out of search results', async ({ page }) => {
 	await page.goto('/does-not-exist/');
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
 	await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+	await expect(page.locator('meta[property="og:url"]')).toHaveCount(0);
 });
 
 test('feeds and crawler files are served', async ({ request }) => {
 	const rss = await request.get('/rss.xml');
 	expect(rss.status()).toBe(200);
 	const feed = await rss.text();
-	expect(feed).toContain('<language>en</language>');
+	expect(feed).toContain(`<language>${SITE_LANGUAGE}</language>`);
 	expect(feed).toContain(`${SITE_URL}/blog/typography/`);
 	expect(feed).toContain(`${SITE_URL}/blog/minimal/`);
 

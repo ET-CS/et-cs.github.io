@@ -5,13 +5,13 @@
 [![Content: CC0](https://img.shields.io/badge/content-CC0-lightgrey.svg)](LICENSE-CONTENT)
 [![Built with Astro](https://img.shields.io/badge/built%20with-Astro-ff5d01.svg)](https://astro.build)
 
-The personal site and blog of Itai Sidney Cohen-Solal: **[et-cs.github.io](https://et-cs.github.io)**.
+A small site by Itai Sidney Cohen-Solal, live at **[et-cs.github.io](https://et-cs.github.io)**.
 
-A static site built with [Astro](https://astro.build): one column of well-set text, a light and dark theme, no client-side framework, and almost no JavaScript.
+Built with [Astro](https://astro.build): one column of well-set text, a light and dark theme, no client-side framework, and almost no JavaScript.
 
 ## Getting started
 
-Requires Node.js (the version in [`.node-version`](.node-version); 22.23.4 or newer works).
+Requires the Node.js version in [`.node-version`](.node-version), which CI also uses.
 
 ```bash
 npm ci
@@ -37,7 +37,7 @@ The first time you run tests, install the browser: `npx playwright install chrom
 
 ## Writing a post
 
-Add a Markdown (`.md`) or MDX (`.mdx`) file to [`src/content/blog/`](src/content/blog/). The file name becomes the URL (`hello-world.md` → `/blog/hello-world/`).
+Add a Markdown (`.md`) file to [`src/content/blog/`](src/content/blog/). The file name becomes the URL (`hello-world.md` → `/blog/hello-world/`).
 
 ```markdown
 ---
@@ -49,31 +49,25 @@ pubDate: '2026-11-03'
 The post, in Markdown.
 ```
 
-Optional fields:
+Add `updatedDate` when you revise a post. Put images next to the post and reference them with a relative path, such as `![A line drawing of a mountain.](./mountain.jpg)`; they're optimized at build time. Describe each image in its alt text, or leave the alt text empty if the image is purely decorative.
 
-- `updatedDate`: when the post was last revised.
-- `heroImage`: a cover image, with `src` (a path relative to the post file) and `alt` (a description of the image, or `''` if it's purely decorative):
-
-  ```yaml
-  heroImage:
-    src: './cover.jpg'
-    alt: 'A line drawing of a mountain.'
-  ```
-
-The schema lives in [`src/content.config.ts`](src/content.config.ts), so a typo in the frontmatter fails the build instead of shipping.
+The schema lives in [`src/content.config.ts`](src/content.config.ts), so a misspelled or unknown frontmatter field fails the build instead of shipping.
 
 ## Project structure
 
 ```text
+public/                Static files served as-is (favicons)
 src/
-├── components/   Header, footer, post list, <head> metadata
-├── content/blog/ Blog posts (Markdown / MDX)
-├── layouts/      Base page layout and blog post layout
-├── lib/          Data helpers (e.g. sorted posts)
-├── pages/        Routes: home, writing, about, 404, RSS, robots.txt
-└── styles/       global.css: design tokens and typography
-tests/            Playwright end-to-end and accessibility tests
-tests/fixtures/   Fixture posts used by test builds
+├── components/        Reusable UI components
+├── content/blog/      Posts (Markdown)
+├── layouts/           Base layout (document head and page chrome) and post layout
+├── lib/               Data helpers and shared types
+├── pages/             Routes (pages and endpoints)
+├── styles/            global.css: design tokens and typography
+├── consts.ts          Site-wide settings: URL, title, description, profile links
+└── content.config.ts  Post frontmatter schema
+tests/                 Playwright end-to-end and accessibility tests
+tests/fixtures/        Fixture posts used by test builds
 ```
 
 ## Quality
@@ -83,7 +77,7 @@ Every pull request runs [CI](.github/workflows/ci.yml), which must pass before a
 - **Formatting:** Prettier
 - **Linting:** ESLint with `typescript-eslint` (strict) and Astro accessibility rules (`jsx-a11y` strict)
 - **Types:** TypeScript with Astro's `strictest` preset
-- **Tests:** Playwright builds a test version of the site with fixture posts (in [`tests/fixtures/`](tests/fixtures/), never deployed) and checks it on desktop and mobile. Every page, including posts and the 404 page, renders without errors or horizontal scrolling and passes [axe](https://github.com/dequelabs/axe-core) WCAG 2.2 AA checks in light and dark mode, with or without the theme toggle. Tests also cover links, navigation state, post dates and metadata, the page without JavaScript, RSS, sitemap and robots.txt.
+- **Tests:** Playwright builds a test version of the site with fixture posts (in [`tests/fixtures/`](tests/fixtures/), never deployed) and checks every page on desktop and mobile, including [axe](https://github.com/dequelabs/axe-core) WCAG 2.2 AA checks in light and dark mode; see [`tests/site.spec.ts`](tests/site.spec.ts).
 
 A pre-commit hook formats and lints staged files. Dependabot keeps dependencies and GitHub Actions current, and every action is pinned to a commit SHA.
 
@@ -93,7 +87,7 @@ Pushing to `main` runs CI; if it passes, the built site is deployed to GitHub Pa
 
 ## Issues
 
-This is a personal site. Spotted a typo or a bug? [Open an issue](https://github.com/ET-CS/et-cs.github.io/issues). For security issues, see [SECURITY.md](SECURITY.md).
+Spotted a typo or a bug? [Open an issue](https://github.com/ET-CS/et-cs.github.io/issues). For security issues, see [SECURITY.md](SECURITY.md).
 
 ## License
 

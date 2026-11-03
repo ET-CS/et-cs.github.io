@@ -1,26 +1,22 @@
 ---
 import PostList from '../components/PostList.astro';
+import { PROFILES } from '../consts';
 import Base from '../layouts/Base.astro';
 import { getPosts } from '../lib/posts';
 
-const RECENT_POSTS_LIMIT = 10;
-
 const posts = await getPosts();
-const recentPosts = posts.slice(0, RECENT_POSTS_LIMIT);
 ---
 
 <Base>
 	<h1>Hi, I'm Itai.</h1>
-	<p class="lede">Welcome to my corner of the web. This is where I write.</p>
-	{recentPosts.length > 0 && (
-		<section aria-labelledby="recent-writing">
-			<h2 id="recent-writing">Writing</h2>
-			<PostList posts={recentPosts} />
-			{posts.length > recentPosts.length && (
-				<p class="more">
-					<a href="/blog/">All writing</a>
-				</p>
-			)}
+	<p class="lede">
+		More about me at <a href={PROFILES.website.url}>{PROFILES.website.label}</a>. Code lives on{' '}
+		<a href={PROFILES.github.url}>{PROFILES.github.label}</a>.
+	</p>
+	{posts.length > 0 && (
+		<section aria-labelledby="writing">
+			<h2 id="writing">Writing</h2>
+			<PostList posts={posts} />
 		</section>
 	)}
 </Base>
@@ -40,9 +36,5 @@ const recentPosts = posts.slice(0, RECENT_POSTS_LIMIT);
 		font-weight: 500;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-	}
-	.more {
-		margin-top: 1rem;
-		font-size: 0.9em;
 	}
 </style>
