@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
+      interval: monthly
     # Wait a week before adopting new releases, so bad or compromised versions are caught first.
     cooldown:
       default-days: 7
@@ -25,8 +24,7 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
-      day: monday
+      interval: monthly
     cooldown:
       default-days: 7
     commit-message:

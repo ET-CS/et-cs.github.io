@@ -87,7 +87,7 @@ Pushing to `main` runs CI; if it passes, the built site is deployed to GitHub Pa
 
 ## Issues
 
-Spotted a typo or a bug? [Open an issue](https://github.com/ET-CS/et-cs.github.io/issues). For security issues, see [SECURITY.md](SECURITY.md).
+Spotted a typo or a bug? [Open an issue](https://github.com/ET-CS/et-cs.github.io/issues).
 
 ## License
 
