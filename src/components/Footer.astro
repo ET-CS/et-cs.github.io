@@ -1,9 +1,6 @@
----
-const today = new Date();
----
-
 <footer>
-	&copy; {today.getFullYear()} Itai Cohen-Solal. All rights reserved.
+	&copy; Itai Cohen-Solal ·{' '}
+	<a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener" target="_blank">CC BY 4.0</a>
 	<div class="social-links">
 		<a href="https://x.com/etaycs" target="_blank" rel="noopener">
 			<span class="sr-only">Follow me on X</span>
@@ -37,6 +34,9 @@ const today = new Date();
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+	footer > a {
+		color: inherit;
 	}
 	.social-links {
 		display: flex;

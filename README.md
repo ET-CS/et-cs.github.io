@@ -29,3 +29,7 @@ Post content here.
 
 Every push to `master` builds and deploys the site via `.github/workflows/deploy.yml`.
 One-time setup: in the repo go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
+
+## License
+
+Content: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Code: MIT. See [LICENSE.md](LICENSE.md).
