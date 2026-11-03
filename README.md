@@ -79,9 +79,9 @@ A pre-commit hook formats and lints staged files. Dependabot keeps dependencies 
 
 Pushing to `master` runs CI; if it passes, the built site is deployed to GitHub Pages.
 
-## Contributing
+## Issues
 
-Fixes are welcome: typos, bugs, accessibility and performance. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md). To report a security issue, see [SECURITY.md](SECURITY.md).
+This is a personal site. Spotted a typo or a bug? [Open an issue](https://github.com/ET-CS/et-cs.github.io/issues). For security issues, see [SECURITY.md](SECURITY.md).
 
 ## License
 

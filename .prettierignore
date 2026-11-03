@@ -3,4 +3,3 @@ dist/
 playwright-report/
 test-results/
 package-lock.json
-CODE_OF_CONDUCT.md
