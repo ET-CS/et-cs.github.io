@@ -8,7 +8,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 interface Props {
 	title?: string;
 	description?: string;
-	image?: ImageMetadata;
+	image?: ImageMetadata | undefined;
 }
 
 const { title, description = SITE_DESCRIPTION, image } = Astro.props;

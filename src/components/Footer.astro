@@ -1,20 +1,34 @@
 ---
 import { SITE_TITLE } from '../consts';
+
+const LICENSE_URL = 'https://creativecommons.org/publicdomain/zero/1.0/';
+
+const links = [
+	{ href: 'https://github.com/ET-CS', label: 'GitHub', rel: 'me noopener' },
+	{ href: 'https://x.com/etaycs', label: 'X', rel: 'me noopener' },
+	{ href: 'https://etcs.me', label: 'etcs.me', rel: 'me noopener' },
+	{ href: '/rss.xml', label: 'RSS', rel: 'alternate' },
+] as const;
 ---
 
 <footer class="wrap">
-	<p>
-		{SITE_TITLE} ·{' '}
-		<a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="license noopener">
-			Public domain (CC0)
-		</a>
-	</p>
-	<p>
-		<a href="https://github.com/ET-CS" rel="me noopener">GitHub</a> ·{' '}
-		<a href="https://x.com/etaycs" rel="me noopener">X</a> ·{' '}
-		<a href="https://etcs.me" rel="me noopener">etcs.me</a> ·{' '}
-		<a href="/rss.xml">RSS</a>
-	</p>
+	<ul>
+		<li>{SITE_TITLE}</li>
+		<li>
+			<a href={LICENSE_URL} rel="license noopener">
+				Public domain (CC0)
+			</a>
+		</li>
+	</ul>
+	<ul aria-label="Elsewhere">
+		{links.map(({ href, label, rel }) => (
+			<li>
+				<a href={href} rel={rel}>
+					{label}
+				</a>
+			</li>
+		))}
+	</ul>
 </footer>
 
 <style>
@@ -29,8 +43,20 @@ import { SITE_TITLE } from '../consts';
 		margin-bottom: 1.5rem;
 		border-top: 1px solid var(--rule);
 	}
-	p {
+	ul {
 		margin: 0 0 0.3em;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		display: inline;
+		margin: 0;
+	}
+	/* Decorative separator; the empty alt text keeps screen readers from announcing it. */
+	li + li::before {
+		content: '·';
+		content: '·' / '';
+		margin: 0 0.4em;
 	}
 	a {
 		text-decoration-color: var(--rule);

@@ -1,7 +1,4 @@
-/*
-  Editorial, monochrome, one column. Typography does the work.
-  Font: Newsreader (variable, optical sizes). Colors: ink on paper.
-*/
+/* Global styles: design tokens (light and dark), base typography and prose elements. */
 
 :root {
 	--paper: #fcfbf8;
