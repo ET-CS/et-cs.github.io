@@ -2,7 +2,7 @@
 
 export const SITE_URL = 'https://et-cs.github.io';
 export const SITE_TITLE = 'Itai Sidney Cohen-Solal';
-export const SITE_DESCRIPTION = 'Personal site and blog of Itai Sidney Cohen-Solal.';
+export const SITE_DESCRIPTION = 'A small site by Itai Sidney Cohen-Solal.';
 export const SITE_LANGUAGE = 'en';
 
 export const PROFILES = {

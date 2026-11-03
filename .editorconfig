@@ -8,9 +8,9 @@ trim_trailing_whitespace = true
 indent_style = tab
 indent_size = 2
 
-[*.{md,mdx,yml,yaml}]
+[*.{md,yml,yaml}]
 indent_style = space
 indent_size = 2
 
-[*.{md,mdx}]
+[*.md]
 trim_trailing_whitespace = false

@@ -179,6 +179,7 @@ pre {
 	padding: 1em 1.2em;
 	overflow-x: auto;
 	border-radius: 4px;
+	/* `!important` overrides the background Shiki sets inline, so code blocks use `--code-bg`. */
 	background: var(--code-bg) !important;
 	line-height: 1.5;
 }

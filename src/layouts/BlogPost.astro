@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import type { Post } from '../lib/posts';
@@ -10,14 +9,13 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage } = post.data;
+const { title, description, pubDate, updatedDate } = post.data;
 const { Content } = await render(post);
 ---
 
 <Base
 	title={title}
 	description={description}
-	image={heroImage?.src}
 	article={{ publishedTime: pubDate, modifiedTime: updatedDate }}
 >
 	<article>
@@ -33,15 +31,6 @@ const { Content } = await render(post);
 				)}
 			</p>
 		</header>
-		{heroImage && (
-			<Image
-				class="hero"
-				src={heroImage.src}
-				alt={heroImage.alt}
-				widths={[720, 1200]}
-				sizes="(min-width: 640px) 36rem, 100vw"
-			/>
-		)}
 		<Content />
 	</article>
 </Base>
@@ -58,9 +47,5 @@ const { Content } = await render(post);
 		color: var(--muted);
 		font-size: 0.85em;
 		font-variant-numeric: tabular-nums;
-	}
-	.hero {
-		margin: 0 0 2.5rem;
-		border-radius: 4px;
 	}
 </style>

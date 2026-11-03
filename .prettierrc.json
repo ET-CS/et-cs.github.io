@@ -7,7 +7,7 @@
 	"overrides": [
 		{ "files": "*.astro", "options": { "parser": "astro" } },
 		{
-			"files": ["*.md", "*.mdx", "*.yml", "*.yaml"],
+			"files": ["*.md", "*.yml", "*.yaml"],
 			"options": { "useTabs": false, "tabWidth": 2 }
 		}
 	]
