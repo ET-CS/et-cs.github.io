@@ -4,8 +4,9 @@ Conventions for working in this repository, for human and AI contributors alike.
 
 ## Project
 
-The personal site and blog of Itai Cohen-Solal, built with Astro and deployed to GitHub Pages at https://et-cs.github.io.
+The personal site and blog of Itai Sidney Cohen-Solal, built with Astro and deployed to GitHub Pages at https://et-cs.github.io.
 
+- **Name:** use the full name, Itai Sidney Cohen-Solal, in the site title, metadata and docs; conversational copy uses Itai.
 - **Scope:** a personal site with a single maintainer. Community scaffolding (code of conduct, contributing guide, issue templates) is intentionally omitted.
 - **Content:** posts and personal copy are written by the maintainer. Don't author or publish content without their direction.
 - **Privacy:** don't add email addresses or other personal contact details anywhere in the repository, including code, docs, metadata and commit messages.
