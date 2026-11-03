@@ -33,13 +33,31 @@ import HeaderLink from './HeaderLink.astro';
 				</svg>
 			</a>
 		</div>
+		<button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+			<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24"><path fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+			<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24"><circle cx="12" cy="12" r="5" fill="currentColor"></circle><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></g></svg>
+		</button>
 	</nav>
 </header>
+<script>
+	const btn = document.getElementById('theme-toggle');
+	btn?.addEventListener('click', () => {
+		const root = document.documentElement;
+		const current =
+			root.dataset.theme ??
+			(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+		const next = current === 'dark' ? 'light' : 'dark';
+		root.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch {}
+	});
+</script>
 <style>
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: white;
+		background: var(--surface);
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
 	}
 	h2 {
@@ -58,7 +76,7 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
+		color: rgb(var(--black));
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 	}
@@ -69,6 +87,36 @@ import HeaderLink from './HeaderLink.astro';
 	.social-links,
 	.social-links a {
 		display: flex;
+	}
+	#theme-toggle {
+		display: flex;
+		margin-left: 0.5em;
+		padding: 0.4em;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		color: rgb(var(--black));
+		cursor: pointer;
+	}
+	#theme-toggle:hover {
+		background: rgb(var(--gray-light));
+	}
+	.icon-sun {
+		display: none;
+	}
+	:global([data-theme='dark']) .icon-sun {
+		display: block;
+	}
+	:global([data-theme='dark']) .icon-moon {
+		display: none;
+	}
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .icon-sun {
+			display: block;
+		}
+		:global(:root:not([data-theme='light'])) .icon-moon {
+			display: none;
+		}
 	}
 	@media (max-width: 720px) {
 		.social-links {
